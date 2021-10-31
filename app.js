@@ -13,10 +13,11 @@ const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://mongo:'
  + process.env.MONGO_ATLAS_PW 
- + '@cluster0.tb2zz.mongodb.net/test', 
-{
-    useMongoClient : true
-});
+ + '@cluster0.tb2zz.mongodb.net/test' 
+// {
+//     useMongoClient : true
+// }
+);
 
 //morgan sluzi za pracenje requesta i errora
 app.use(morgan('dev')); //dev je tip podataka koji cemo koristiti
