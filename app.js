@@ -11,6 +11,8 @@ const orderRoutes = require('./api/routes/orders');
 
 const mongoose = require('mongoose');
 
+mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb+srv://mongo:'
  + process.env.MONGO_ATLAS_PW 
  + '@cluster0.tb2zz.mongodb.net/test' 
@@ -23,7 +25,7 @@ mongoose.connect('mongodb+srv://mongo:'
 app.use(morgan('dev')); //dev je tip podataka koji cemo koristiti
 
 app.use(bodyParser.urlencoded({extended: false})); //Da bi prebacivao podatke
-app.use(bodyParser.json());
+app.use(bodyParser.json()); //express.json 
 
 
 //Za Headere, da odobris pristup??
