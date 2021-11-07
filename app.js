@@ -27,6 +27,7 @@ app.use(morgan('dev')); //dev je tip podataka koji cemo koristiti
 app.use(bodyParser.urlencoded({extended: false})); //Da bi prebacivao podatke
 app.use(bodyParser.json()); //express.json 
 
+app.use('uploads/', express.static('uploads')); //makes uploads public
 
 //Za Headere, da odobris pristup??
 app.use((req, res, next) => {
