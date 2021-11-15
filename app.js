@@ -9,6 +9,8 @@ const productRoutes = require('./api/routes/products');
 
 const orderRoutes = require('./api/routes/orders');
 
+const userRoutes = require('./api/routes/users');
+
 const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
@@ -53,7 +55,7 @@ app.use((req, res, next) => {
 //Routes that should handle requests
 app.use('/products', productRoutes); //nickmane for rutu za producte i koristi sa appom
 app.use('/orders', orderRoutes); //nickname for rutu za ordere i koristi sa appom
-
+app.use('/users',userRoutes);
 
 //svaki request treba doci do ovog fajla pa posle da se prebacuje
 //ako se ne izvrse prva dva (nema funkcija koje bi to izdrzale), onda ce se izvrsiti ovo za error 
