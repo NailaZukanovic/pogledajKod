@@ -21,10 +21,13 @@ router.post("/signup", (req, res, next) => {
               error: err
             });
           } else {
-            const user = new User({
-              _id: new mongoose.Types.ObjectId(),
-              email: req.body.email,
-              password: hash
+            const user = new User(
+              {_id: new mongoose.Types.ObjectId(),
+               name: req.body.name,
+               lastName: req.body.lastName,
+               sex: req.body.sex,
+               email: req.body.email,
+               password: hash
             });
             user
               .save()
