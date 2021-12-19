@@ -130,21 +130,21 @@ router.get("/:productId", (req, res, next) => {
     });
 });
 
-router.patch("/:productId", checkAuth, (req, res, next) => {
+router.patch("/:productId", /*checkAuth, */ (req, res, next) => {
   const id = req.params.productId;
-  const updateOps = {};
-  for (const ops of req.body) {
-    updateOps[ops.propName] = ops.value;
-  }
-  Product.update({ _id: id }, { $set: updateOps })
+  let updateOps = {};
+  console.log("1",req.body, id);
+  updateOps = {...req.body}
+  console.log("2",updateOps)
+  Note.updateOne({ _id: id }, { $set: updateOps })
     .exec()
     .then(result => {
       res.status(200).json({
-          message: 'Product updated',
-          request: {
-              type: 'GET',
-              url: 'http://localhost:4000/products/' + id
-          }
+        message: "Note updated",
+        request: {
+          type: "GET",
+          url: "http://localhost:4000/products/" + id
+        }
       });
     })
     .catch(err => {

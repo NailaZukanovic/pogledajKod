@@ -104,19 +104,17 @@ router.get("/",  /* checkAuth, */ (req, res, next) => {
   
   router.patch("/:noteId", /*checkAuth, */ (req, res, next) => {
     const id = req.params.noteId;
-    const updateOps = {};
-    for (const ops of req.body) {
-      updateOps[ops.propName] = ops.value;
-    }
-    Note.update({ _id: id }, { $set: updateOps })
+    let updateOps = {};
+    updateOps = {...req.body}
+    Note.updateOne({ _id: id }, { $set: updateOps })
       .exec()
       .then(result => {
         res.status(200).json({
-            message: 'Note updated',
-            request: {
-                type: 'GET',
-                url: 'http://localhost:4000/notes/' + id
-            }
+          message: "Note updated",
+          request: {
+            type: "GET",
+            url: "http://localhost:4000/notes/" + id
+          }
         });
       })
       .catch(err => {
