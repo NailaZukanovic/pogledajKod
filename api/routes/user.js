@@ -25,7 +25,6 @@ router.post("/signup", (req, res, next) => {
               {_id: new mongoose.Types.ObjectId(),
                name: req.body.name,
                lastName: req.body.lastName,
-               sex: req.body.sex,
                email: req.body.email,
                password: hash
             });
