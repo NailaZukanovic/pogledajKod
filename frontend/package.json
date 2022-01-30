@@ -2,6 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "proxy":"htts://localhost:3000/",
   "dependencies": {
     "@aldabil/react-scheduler": "^2.1.2",
     "@aws-amplify/ui-react": "^1.2.5",
