@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "nodemon server.js",
-    "heroku-postbuild":"NPM_CONFIG_PRODUCTION=false npm install      --prefix frontend && npm run build --prefix frontend"
+    "start": "nodemon server.js"
   },
   "keywords": [
     "node",
@@ -16,7 +15,6 @@
   
   "author": "Naila Zukanovic",
   "license": "ISC",
-  "proxy":"htts://localhost:4000/",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
@@ -28,5 +26,8 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.14"
+  },
+  "engines": {
+    "node": "16.13.0"
   }
 }
