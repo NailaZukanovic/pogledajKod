@@ -2,7 +2,7 @@ import React, {useEffect} from 'react'
 import { makeStyles } from '@material-ui/core'
 import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation} from 'react-router-dom'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -17,7 +17,8 @@ import NewspaperIcon from '@mui/icons-material/Newspaper';
 import CelebrationIcon from '@mui/icons-material/Celebration';
 import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import NightsStayIcon from '@mui/icons-material/NightsStay';
-import {AmplifySignOut} from "@aws-amplify/ui-react";
+import { useContext } from 'react'
+import AuthContext from './user/AuthContext'
 
 const drawerWidth = 240
 
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => {
 })
 
 export default function Layout({ children }) {
+  const {user, login, logout} = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const classes = useStyles();
@@ -87,7 +89,7 @@ export default function Layout({ children }) {
         text: 'Weather',
         icon: <NightsStayIcon color="secondary" />,
         path:'/weather'
-      },
+      }
     ];
 
 
@@ -111,7 +113,7 @@ export default function Layout({ children }) {
         {/* links/list section */}
 
         <List className="okvir">
-          {menuItems.map((item) => (
+          {user && menuItems.map((item) => (
             <ListItem
               key={item.text} 
               button
@@ -121,7 +123,23 @@ export default function Layout({ children }) {
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
+           
           ))}
+         { user ? <ListItem
+            key={'Logout'}
+            button
+            onClick={() => logout()}
+            className={classes.active}>
+            <ListItemText primary={'LogOut'} />
+          </ListItem>
+          :
+          <ListItem
+            key={'Login/SignUp'}
+            button
+            onClick={() => login()}
+            className={classes.active}>
+            <ListItemText primary={'Login/SignUp'} />
+          </ListItem> }
         </List>
       </Drawer>
       {/* main content */}

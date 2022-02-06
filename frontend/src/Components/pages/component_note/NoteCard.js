@@ -34,19 +34,19 @@ const useStyles = makeStyles({
 
   avatar: {
     backgroundColor: (note) => {
-      if(note.category == 'work')
+      if(note.category === 'work')
       {
         return yellow[700]
       }
-      if(note.category == 'money')
+      if(note.category === 'money')
       {
         return green[500]
       }
-      if(note.category == 'reminders')
+      if(note.category === 'reminders')
       {
         return pink[500]
       }
-      if(note.category == 'todos')
+      if(note.category === 'todos')
       {
         return blue[500]
       }

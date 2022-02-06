@@ -3,8 +3,8 @@ import React, {useState, useEffect} from 'react';
 import {
   BrowserRouter,
   Route,
-  Routes,
-  Navigate
+  Navigate,
+  Routes
 } from 'react-router-dom';
 
 import {
@@ -19,20 +19,19 @@ import Layout from './Components/Layout';
 import Create from './Components/pages/Create';
 import Notes from './Components/pages/Notes';
 import Game from './Components/Game';
-import Recipes from './Components/Recipes';
 import WeatherApp from './Components/weather/WeatherApp';
-import Login from './Components/Login';
-import Register from './Components/Register';
-import { withAuthenticator } from '@aws-amplify/ui-react';
-import Amplify from "aws-amplify";
-import awsExports from "./aws-exports";
-Amplify.configure(awsExports);
+import AuthContext, { AuthContextProvider } from './Components/user/AuthContext';
+import PageNotFound from './Components/PageNotFound';
+import { useContext } from 'react';
+
+
 const theme = createTheme({
   palette: {
     primary: {
       main: '#fefefe'
     },
-    secondary: purple
+    secondary: purple,
+    pink: '#FFC0CB'
   },
 
   typography: {
@@ -65,29 +64,28 @@ const useStyles = makeStyles({
 
 
 
-const App = ({user}) => {
+const App = () => {
   const classes = useStyles();
-
-
+  const {user, login, logout} = useContext(AuthContext);
   return (
-    <div>
+    <AuthContextProvider>
      <ThemeProvider theme={theme} >
         <BrowserRouter>
         <Layout>
           <Routes>
-                {/* <Route path="/" element={<Register/>}/>
-                <Route path="/Login" element={<Login/>}/> */}
-                <Route path="/Create" element={<Create/>}/>
-                <Route path="/Notes" element={<Notes/>}/>
-                <Route path="/Calendar" element={<Calendar/>}/>
-                <Route path="/news" element={<NewsContainer />}/>
-                <Route path="/Game" element={<Game/>}/>
-                <Route path="/Weather" element={<WeatherApp />} />
+                    <Route path="/Create" element={<Create/>}/>
+                    <Route path="/Notes" element={<Notes/>}/>
+                    <Route path="/Calendar" element={<Calendar/>}/>
+                    <Route path="/news" element={<NewsContainer />}/>
+                    <Route path="/Game" element={<Game/>}/>
+                    <Route path="/Weather" element={<WeatherApp />} />
+                    <Route path="/*" element={<PageNotFound/>} />
+            
           </Routes>
         </Layout>
         </BrowserRouter>
     </ThemeProvider>   
-    </div>
+    </AuthContextProvider>
   )
 }
 

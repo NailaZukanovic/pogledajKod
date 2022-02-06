@@ -44,7 +44,10 @@ const NewsContainer = () => {
         const getData = async () => {
             const url = `https://api.currentsapi.services/v1/latest-news?apiKey=Iv0ingCnOq7YDglaNcaU8Lnz8iHVNygfdHIyH_aVypU0J_WT&category=${category}`;
   
-            const response = await fetch(url);
+            const response = await fetch(url).catch(() => setLoading({
+                status: true,
+                maxPercent: 100,
+            }));
             const data = await response.json();
             console.log(data);
             setLoading({
