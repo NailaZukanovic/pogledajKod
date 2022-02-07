@@ -112,21 +112,30 @@ export default function CalendarComponent() {
           return [...prevEvents,...data.data.events];
         });
       });
-        
+    
   }, []);
 
+  console.log(events);
+
   const onConfirm = async (event,action) => {
+    console.log(action);
     if (action === "edit")
     {
       axios.patch(`http://localhost:4000/event/${event._id}`, event);
-    }else 
+    }
+    else
     {
-       
+      console.log(action)
       var rex = axios.post('http://localhost:4000/event/', event);
 
     }
     return new Promise((res,rej) => {res(event)})
   };
+
+  const handleDelete = async (deletedId) => {
+    console.log(deletedId);
+    // axios.delete(`http://localhost:4000/event/${deletedId}`);
+  }
   return ( <>
     <Toaster
     position="top-center"
@@ -137,6 +146,7 @@ export default function CalendarComponent() {
       view="week"
       events={events}
       selectedDate={new Date()}
+      onDelete = {handleDelete}
     />
     </>
   );

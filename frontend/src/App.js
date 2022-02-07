@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {
   BrowserRouter,
   Route,
+  useNavigate,
   Navigate,
   Routes
 } from 'react-router-dom';
@@ -66,7 +67,6 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const {user, login, logout} = useContext(AuthContext);
   return (
     <AuthContextProvider>
      <ThemeProvider theme={theme} >
@@ -77,14 +77,14 @@ const App = () => {
                     <Route path="/Notes" element={<Notes/>}/>
                     <Route path="/Calendar" element={<Calendar/>}/>
                     <Route path="/news" element={<NewsContainer />}/>
-                    <Route path="/Game" element={<Game/>}/>
+                    <Route path="/" exact element={<Game/>}/>
                     <Route path="/Weather" element={<WeatherApp />} />
-                    <Route path="/*" element={<PageNotFound/>} />
-            
+                    <Route path="*" element={<PageNotFound/>} /> 
           </Routes>
         </Layout>
         </BrowserRouter>
-    </ThemeProvider>   
+      
+      </ThemeProvider>   
     </AuthContextProvider>
   )
 }

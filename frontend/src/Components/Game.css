@@ -1,34 +1,31 @@
-*{
-    font-family: 'Quicksand';
+.gameButton{
+    background: none;
+  border: 2px solid #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1em;
 }
 
-.namegame {
-    color: purple;
-    display: block;
-    float: left;
-    width: 100%;
+.gameButton:hover {
+    background: #c23866;
+  color: #fff;
+}
+
+.Game {
+    font-family: Raleway, sans-serif;
+    margin: 0;
+    font-size: 1.5em;
     text-align: center;
-    margin: 20px auto;
-}
-
-.titlegame {
-    width: 100%;
-    display: block;
-    text-align: center;
-    margin: 0 0 20px 0;
-    font-size: 30px;
-}
-
-.namegamebutton {
-    margin: 30px 0 90px 0;
-}
-
-.button {
-    width: 180px;
-    height: 60px;
-    font-size: 25px;
-    border: 6px solid #ffff;
-    border-radius: 8px;
-    background: purple;
+    background: #1b1523;
     color: #fff;
+  }
+
+.card-grid{
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
 }

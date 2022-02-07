@@ -47,8 +47,8 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-export default function Layout({ children }) {
-  const {user, login, logout} = useContext(AuthContext);
+export default function Layout({ children}) {
+  const {user, login, logout, token} = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const classes = useStyles();
@@ -80,11 +80,11 @@ export default function Layout({ children }) {
       //   icon: <CelebrationIcon color="secondary" />,
       //   path:'/recipes'
       // },
-      {
-        text: 'Game',
-        icon: <TravelExploreIcon color="secondary" />,
-        path:'/game'
-      },
+      // {
+      //   text: 'Game',
+      //   icon: <TravelExploreIcon color="secondary" />,
+      //   path:'/'
+      // },
       {
         text: 'Weather',
         icon: <NightsStayIcon color="secondary" />,
@@ -125,6 +125,15 @@ export default function Layout({ children }) {
             </ListItem>
            
           ))}
+          <ListItem
+            key={'Game'} 
+            button
+            onClick={() => navigate('/')}
+            className={location.pathname == '/' ? classes.active : null}
+            >
+            <ListItemIcon><TravelExploreIcon color="secondary" /></ListItemIcon>
+            <ListItemText primary={'Game'} />
+          </ListItem>
          { user ? <ListItem
             key={'Logout'}
             button

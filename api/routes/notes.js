@@ -6,7 +6,7 @@ const Note = require("../models/notes");
 const checkAuth = require('../middleware/check-auth');
 
 
-router.get("/",  /* checkAuth, */ (req, res, next) => {
+router.get("/",  checkAuth, (req, res, next) => {
     Note.find()
       .select("title details _id category")
       .exec()
@@ -42,7 +42,7 @@ router.get("/",  /* checkAuth, */ (req, res, next) => {
       });
   });
   
-  router.post("/",  /* checkAuth, */ (req, res, next) => {
+  router.post("/",  checkAuth, (req, res, next) => {
     const note = new Note({
       _id: new mongoose.Types.ObjectId(),
       title: req.body.title,
@@ -75,7 +75,7 @@ router.get("/",  /* checkAuth, */ (req, res, next) => {
       });
   });
   
-  router.get("/:noteId", /* checkAuth, */ (req, res, next) => {
+  router.get("/:noteId", checkAuth, (req, res, next) => {
     const id = req.params.noteId;
     Note.findById(id)
       .select('title details _id category')
@@ -102,7 +102,7 @@ router.get("/",  /* checkAuth, */ (req, res, next) => {
       });
   });
   
-  router.patch("/:noteId", /*checkAuth, */ (req, res, next) => {
+  router.patch("/:noteId", checkAuth, (req, res, next) => {
     const id = req.params.noteId;
     let updateOps = {};
     updateOps = {...req.body}
@@ -125,7 +125,7 @@ router.get("/",  /* checkAuth, */ (req, res, next) => {
       });
   });
   
-router.delete("/:noteId", /* checkAuth, */ (req, res, next) => {
+router.delete("/:noteId",  checkAuth, (req, res, next) => {
     const id = req.params.noteId;
     Note.remove({ _id: id })
       .exec()

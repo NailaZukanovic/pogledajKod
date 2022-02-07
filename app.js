@@ -15,7 +15,6 @@ const eventRoutes = require('./api/routes/event');
 
 const noteRoutes = require('./api/routes/notes');
 
-const googleRoutes = require('./api/routes/google');
 
 const mongoose = require('mongoose');
 
@@ -64,7 +63,6 @@ app.use('/orders', orderRoutes); //nickname for rutu za ordere i koristi sa appo
 app.use('/user',userRoutes);
 app.use('/notes', noteRoutes);
 app.use('/event', eventRoutes);
-app.use('/google',googleRoutes);
 //svaki request treba doci do ovog fajla pa posle da se prebacuje
 //ako se ne izvrse prva dva (nema funkcija koje bi to izdrzale), onda ce se izvrsiti ovo za error 
 

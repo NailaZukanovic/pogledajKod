@@ -1,106 +1,96 @@
-import React, { Component } from 'react';
-import $ from 'jquery';
-import PlayAgain from './PlayAgain';
 import './Game.css';
+import React, {useState, useEffect} from 'react';
+import SingleCard from './SingleCard';
 
-export default class Game extends Component {
+const cardImages = [
+  { "src" : "/img/helmet-1.png"},
+  { "src" : "/img/potion-1.png"},
+  { "src" : "/img/ring-1.png"},
+  { "src" : "/img/scroll-1.png"},
+  { "src" : "/img/shield-1.png"},
+  { "src" : "/img/sword-1.png"},
+]
+function Game() {
+  const [cards, setCards] = useState([])
+  const [turns, setTurns] = useState(0)
+  const [choiceOne, setChoiceOne] = useState(null)
+  const [choiceTwo, setChoiceTwo] = useState(null)
+  const [disabled, setDisabled] = useState(false)
 
-//state tracks the current image from the api, the item trhe player guessed, attempts played, and whether the game has been played once
-  state = {
-    images: [],
-    image: "",
-    item: "",
-    gamePlayed: false,
-    gameCount: 0
+  // shuffle cards for new game
+  const shuffleCards = () => {
+    const shuffledCards = [...cardImages, ...cardImages]
+      .sort(() => Math.random() - 0.5)
+      .map(card => ({ ...card, id: Math.random() }))
+
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setCards(shuffledCards)
+    setTurns(0)
   }
 
-//ajax request to get the image for the game
-  getGameImage = () => {
-    const spaceSearch = ["moon", "earth", "jupiter", "saturn", "pluto", "mars", "venus"]
-    let randomSearchItem = spaceSearch[Math.floor(Math.random()*spaceSearch.length)];
-    let oneHundred = [];
-    for (let i = 0; i <= 100; i++) {
-       oneHundred.push(i);
-    }
-    let randomNumber = oneHundred[Math.floor(Math.random()*oneHundred.length)]
+  // handle a choice
+  const handleChoice = (card) => {
+    console.log(card)
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+  }
 
-    const url = "https://images-api.nasa.gov/search?q="
+  // compare 2 selected cards
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      setDisabled(true)
 
-    // sending the call to the NASA API
-        $.ajax({
-          url: url + randomSearchItem,
-          type: "GET",
-          dataType : "json",
-        }).done(function(json){
-          let imageres = json.collection.items[randomNumber].links[0].href
-        }).then(json => {
-          this.setState({
-            image: json.collection.items[randomNumber].links[0].href,
-            item: randomSearchItem
-           })
+      if (choiceOne.src === choiceTwo.src) {
+        setCards(prevCards => {
+          return prevCards.map(card => {
+            if (card.src === choiceOne.src) {
+              return { ...card, matched: true }
+            } else {
+              return card
+            }
+          })
         })
+        resetTurn()
+      } else {
+        setTimeout(() => resetTurn(), 1000)
+      }
 
-  }
-
-//the game choices are rendered
-  playGame = () => {
-    const spaceWords = ["moon", "earth", "jupiter", "saturn", "pluto", "mars", "venus"]
-      return spaceWords.map(word =>
-        <div className="guessing">
-          <button className="button"onClick={ e => this.guessChoice(e)} id={word}>{word}</button>
-        </div>
-      )
-  }
-
-//the player chooses one item and this function determines if it's a win
-  guessChoice = (e) => {
-
-    this.setState({
-      gamePlayed: true,
-      guess: e.target.id
-    })
-
-    if (this.state.item === e.target.id) {
-      $(".namegamebutton").html("You're Right!")
-
-    } else {
-      $(".namegamebutton").html("Wrong, Try Again. Correct Answer: " + this.state.item)
     }
+  }, [choiceOne, choiceTwo])
 
-
+  // reset choices & increase turn
+  const resetTurn = () => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setTurns(prevTurns => prevTurns + 1)
+    setDisabled(false)
   }
 
-  playAgain = () => {
-    this.setState({
-      gamePlayed: false
-    })
-  }
+  // start new game automagically
+  useEffect(() => {
+    shuffleCards()
+  }, [])
+  return (
+    <div className="Game">
+      <h1>Magic Match</h1>
+      <button onClick={shuffleCards} className="gameButton">New Game</button>
 
-  renderGame = () => {
-    return <div className="namegamebutton">{this.playGame()}</div>
-  }
-
-
-//ajax request after the component mounts
-  componentDidMount(){
-    this.getGameImage()
-    this.setState({gameCount: this.state.gameCount++})
-  }
-
-
-//Renders the game image, the choices, and determines if the game is done and can be played again
-  render() {
-
-    return (
-
-      <div className="namegame">
-
-        <div className="titlegame">Guess which one is associated with this image:</div>
-        <img src={this.state.image} id="namegameimage" />
-        {this.renderGame()}
-        {this.state.gamePlayed ? <PlayAgain /> : null}
-
+      <div className="card-grid">
+        {cards.map(card => (
+          <SingleCard
+            key={card.id}
+            card={card}
+            handleChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
+          />
+        ))}
       </div>
-    );
-  }
+
+      <p>Turns: {turns}</p>
+
+    </div>
+  )
 }
+
+export default Game;
