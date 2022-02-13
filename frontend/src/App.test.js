@@ -1,8 +1,11 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders Magic Match game on initial load', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const magicMatchGame = screen.getByRole('heading', {
+    name: /magic match/i,
+  });
+
+  expect(magicMatchGame).toBeInTheDocument();
 });
