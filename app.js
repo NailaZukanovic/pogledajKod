@@ -20,9 +20,7 @@ const mongoose = require('mongoose');
 
 mongoose.Promise = global.Promise;
 
-mongoose.connect('mongodb+srv://mongo:'
- + process.env.MONGO_ATLAS_PW 
- + '@cluster0.tb2zz.mongodb.net/test' 
+mongoose.connect('mongodb+srv://mongo:yKI4hF1bRag7TGLq@cluster0.tb2zz.mongodb.net/test' 
 // {
 //     useMongoClient : true
 // }
