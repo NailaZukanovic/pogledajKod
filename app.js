@@ -14,7 +14,7 @@ const userRoutes = require('./api/routes/user');
 const eventRoutes = require('./api/routes/event');
 
 const noteRoutes = require('./api/routes/notes');
-
+const cors = require("cors");
 
 const mongoose = require('mongoose');
 
@@ -29,7 +29,8 @@ mongoose.connect('mongodb+srv://mongo:yKI4hF1bRag7TGLq@cluster0.tb2zz.mongodb.ne
 //morgan sluzi za pracenje requesta i errora
 app.use(morgan('dev')); //dev je tip podataka koji cemo koristiti
 
-
+app.use(cors()); 
+app.options("*", cors()); 
 app.use('/uploads', express.static('uploads')); //makes uploads public
 
 app.use(bodyParser.urlencoded({extended: false})); //Da bi prebacivao podatke
