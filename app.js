@@ -29,7 +29,7 @@ mongoose.connect('mongodb+srv://mongo:yKI4hF1bRag7TGLq@cluster0.tb2zz.mongodb.ne
 //morgan sluzi za pracenje requesta i errora
 app.use(morgan('dev')); //dev je tip podataka koji cemo koristiti
 
-app.use(cors()); 
+
 app.options("*", cors()); 
 app.use('/uploads', express.static('uploads')); //makes uploads public
 
